@@ -18,8 +18,8 @@ const morgan = require("morgan");
 mongoose.connect(MONGODB_URL);
 // Connection Events
 mongoose.connection
-.on("open", () => console.log("You are connected to mongoose..⚡️🔌⚡️"))
-.on("close", () => console.log("You are disconnected from mongoose..🚫🔌🚫"))
+.on("open", () => console.log("You are connected to mongoose..⚡️🔌 ⚡️"))
+.on("close", () => console.log("You are disconnected from mongoose..🚫 🔌 🚫"))
 .on("error", (error) => console.log(error));
 
 ///////////////////////////////
