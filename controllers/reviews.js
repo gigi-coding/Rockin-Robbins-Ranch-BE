@@ -1,6 +1,6 @@
 const express = require("express");
 const req = require("express/lib/request");
-const { Reviews } = require("../models");
+const { Reviews, Rooms } = require("../models");
 const router = express.Router();
 
 //for user reviews
@@ -36,5 +36,16 @@ router.post("/:roomId", async (req, res) => {
 
 // update route
 // delete route
+router.delete("/:roomId", async (req, res) => {
+    try {
+        res.json(
+            await Rooms.findOneAndDelete({
+                room: req.params.roomId,
+            })
+        );
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
 
 module.exports = router;
