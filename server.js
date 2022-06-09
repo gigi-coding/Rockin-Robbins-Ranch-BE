@@ -5,8 +5,9 @@
 require("dotenv").config();
 const { PORT = 3000, MONGODB_URL } = process.env;
 const express = require("express");
-const mongoose = require("mongoose");
 const app = express();
+const mongoose = require("mongoose");
+
 // import middleware
 const cors = require("cors");
 const morgan = require("morgan");
@@ -30,6 +31,12 @@ mongoose.connection
 app.use(cors()); //to prevent cors errors, open access to all origins
 app.use(morgan("dev")); // logging
 app.use(express.json()); // parse json bodies
+
+///////////////////////////////
+// REGISTER CONTROLLERS
+////////////////////////////////
+app.use("/reviews", reviews);
+app.use("/rooms", rooms);
 
 ///////////////////////////////
 // ROUTES

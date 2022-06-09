@@ -17,7 +17,7 @@ router.post("/:roomId", async (req, res) => {
     try {
         await Reviews.updateOne(
             {
-                rooms: req.params.roomId //assigns the _id from the room
+                room: req.params.roomId //assigns the _id from the room
             },
             {
                 review: req.body.comment,
