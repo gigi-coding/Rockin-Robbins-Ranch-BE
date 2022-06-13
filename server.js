@@ -24,19 +24,12 @@ mongoose.connection
 .on("close", () => console.log("You are disconnected from mongoose..🚫 🔌 🚫"))
 .on("error", (error) => console.log(error));
 
-// MODELS
-const roomSchema = new mongoose.Schema({
-    name: String, 
-    image: String,
-    description: String,
-    price: Number,
-    rating: Number,
-});
-const Room = mongoose.model("Room", roomSchema);
 
 const reviewsSchema = new mongoose.Schema({
-    comment: String,
-    rating: Number,
+    name: String,
+    month: String,
+    review: String,
+    image: String,
 },
 {
     timestamp: true
@@ -60,52 +53,11 @@ app.use(express.json()); // parse json bodies
 // ROUTES
 ////////////////////////////////
 // create a test route
-app.get("/", (req, res) => {
-    res.send("TESTING THE RANCH!");
-});
+// app.get("/", (req, res) => {
+//     res.send("TESTING THE RANCH!");
+// });
 
-//ROOM INDEX ROUTE
-app.get("/room", async (req, res) => {
-    try {
-        //to get all rooms
-        res.send(rooms);
-    } catch (error) {
-        console.log(error)
-        //send error
-        res.status(400).json(error);
-    }
-});
-
-//POST ROUTE
-app.post("/room", async (req, res) => {
-    try {
-        res.json(await Room.create(req.body));
-    } catch (error) {
-        res.status(400).json(error)
-    }
-});
-
-// UPDATE ROUTE
-app.put("/room/:id", async (req, res) => {
-    try {
-        res.json(
-            await Room.findByIdAndUpdate(req.params.id, req.body)
-        );
-    } catch (error) {
-        res.status(400).json(error);
-    }
-})
-
-//DELETE ROUTE
-app.delete("/room/:id", async (req, res) => {
-    try {
-        res.json(await Room.findByIdAndDelete(req.params.id));
-    } catch (error) {
-        res.status(400).json(error);
-    }
-});
-
-//FOR USER REVIEWS
+//FOR USER REVIEWS page
 app.get("/reviews", async(req,res) =>{
     try {
         res.json(await Reviews.find({}));
@@ -114,16 +66,37 @@ app.get("/reviews", async(req,res) =>{
     }
 });
 
-//for user reviews and ratings
+// POST A REVIEW
 app.post("/reviews", async (req, res) => {
     try {
         res.json(await Reviews.create(req.body));
         // if review update is successful
-        res.status(200).send("Updated Sucessfully!")
+        res.status(200).send("Added Sucessfully!")
     } catch (error) {
         res.status(400).json(error);
     }
 });
+
+// UPDATE REVIEW
+app.put("/reviews", async (req, res) => {
+    try {
+        res.json(
+            await Reviews.findByIdAndUpdate(req.params.id, req.body)
+        );
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
+
+// DELETE A REVIEW
+app.delete("/reviews", async (req, res) => {
+    try {
+        res.json(await Reviews.findByIdAndDelete(req.params.id));
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
+
 
 ///////////////////////////////
 // LISTENER
